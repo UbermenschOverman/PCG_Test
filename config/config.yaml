@@ -1,0 +1,51 @@
+# config.yaml
+
+# Data paths
+data:
+  preprocessed_data_dir: "preprocessed_data"
+  normal_dir: "data/normal"
+  abnormal_dir: "data/abnormal"
+  preprocessed_normal_dir: "preprocessed_data/normal"
+  preprocessed_abnormal_dir: "preprocessed_data/abnormal"
+
+# Model paths
+saved_models:
+  model_dir: "saved_models"
+  model_filename: "vqvae_best.h5"
+
+# Results paths
+results:
+  evals_dir: "results/evals"
+  reconstructed_dir: "results/reconstructed"
+
+# Preprocessing settings
+preprocessing:
+  chunk_size: 4    # Length of each chunk in seconds
+  sample_rate: 16000  # Sample rate for audio
+  mel_n_fft: 1024   # FFT size for Mel spectrogram
+  mel_win_length: 1024  # Window size for Mel spectrogram
+  mel_hop_length: 512   # Hop length for Mel spectrogram
+  mel_num_mels: 128  # Number of Mel bins
+  gammatone: True    # Use Gammatone filterbank
+
+# Training settings
+training:
+  batch_size: 32
+  learning_rate: 0.0001
+  epochs: 100
+  latent_dim: 256
+  commitment_cost: 0.25
+  decay_steps: 50000
+  decay_rate: 0.5
+  beta1: 0.9
+  beta2: 0.999
+  early_stopping_patience: 10
+
+# Evaluation settings
+evaluation:
+  mse_threshold: 0.01  # Mean Squared Error threshold for evaluation
+  ssim_threshold: 0.75  # SSIM threshold for image quality evaluation
+
+# Inference settings
+inference:
+  output_dir: "results/reconstructed"  # Output directory for reconstructed images
