@@ -2,7 +2,6 @@
 
 # Data paths
 data:
-  preprocessed_data_dir: "preprocessed_data"
   normal_dir: "data/normal"
   abnormal_dir: "data/abnormal"
   preprocessed_normal_dir: "preprocessed_data/normal"
