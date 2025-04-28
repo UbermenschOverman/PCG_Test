@@ -20,7 +20,7 @@ results:
 # Preprocessing settings
 preprocessing:
   chunk_size: 4    # Length of each chunk in seconds
-  sample_rate: 16000  # Sample rate for audio
+  sample_rate: 2000  # Sample rate for audio
   mel_n_fft: 1024   # FFT size for Mel spectrogram
   mel_win_length: 1024  # Window size for Mel spectrogram
   mel_hop_length: 512   # Hop length for Mel spectrogram
