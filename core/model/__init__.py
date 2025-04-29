@@ -1,1 +1,1 @@
-from .vqvae import VQVAE
+from .vqvae import build_vqvae
