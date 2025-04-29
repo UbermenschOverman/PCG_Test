@@ -1,7 +1,7 @@
 import os
 import tensorflow as tf
-from core.data_loader import create_dataset
-from core.model.vqvae import build_vqvae
+from data_loader import create_dataset
+from model.vqvae import build_vqvae
 import yaml
 import matplotlib.pyplot as plt
 
@@ -25,28 +25,37 @@ def plot_loss(history, save_path):
 def main():
     # Load config
     config = load_config()
-    paths = config['paths']
+    paths = config['saved_models']
     training_cfg = config['training']
     model_cfg = config['model']
 
     batch_size = training_cfg['batch_size']
     epochs = training_cfg['epochs']
 
-    # Create datasets
-    train_ds, val_ds = create_dataset(mode='train')
+    # Tạo dataset với img_size đã được truyền vào
+    image_size = (128, 128)  # Kích thước ảnh 
+    train_ds, val_ds = create_dataset(img_size=image_size, mode='train')
+
+    # Kiểm tra dữ liệu đầu vào
+    for images, labels in train_ds.take(1):
+      print(f"Train batch shape: {images.shape}, {labels.shape}")
+
+    for images, labels in val_ds.take(1):
+      print(f"Val batch shape: {images.shape}, {labels.shape}")
 
     # Build model
     model = build_vqvae(
         input_shape=model_cfg['input_shape'],
         embedding_dim=model_cfg['embedding_dim'],
         num_embeddings=model_cfg['num_embeddings'],
-        commitment_cost=model_cfg['commitment_cost']
+        commitment_cost=training_cfg['commitment_cost']
     )
 
     model.compile(optimizer=tf.keras.optimizers.Adam(), loss='mse')
 
+
     # Prepare checkpoint
-    checkpoint_dir = paths['checkpoint_dir']
+    checkpoint_dir = paths['model_dir']
     os.makedirs(checkpoint_dir, exist_ok=True)
 
     checkpoint_path = os.path.join(checkpoint_dir, 'vqvae_best.h5')

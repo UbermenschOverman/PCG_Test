@@ -12,6 +12,14 @@ saved_models:
   model_dir: "saved_models"
   model_filename: "vqvae_best.h5"
 
+#Model settings
+model:
+  input_shape: [128, 128, 1]
+  shuffle: true
+  embedding_dim: 128
+  num_embeddings: 256
+
+
 # Results paths
 results:
   evals_dir: "results/evals"
@@ -21,14 +29,15 @@ results:
 preprocessing:
   chunk_size: 4    # Length of each chunk in seconds
   sample_rate: 2000  # Sample rate for audio
-  mel_n_fft: 1024   # FFT size for Mel spectrogram
-  mel_win_length: 1024  # Window size for Mel spectrogram
-  mel_hop_length: 512   # Hop length for Mel spectrogram
-  mel_num_mels: 128  # Number of Mel bins
+  mel_n_fft: 512   # FFT size for Mel spectrogram
+  mel_win_length: 512  # Window size for Mel spectrogram
+  mel_hop_length: 128   # Hop length for Mel spectrogram
+  mel_num_mels: 512  # Number of Mel bins
   gammatone: True    # Use Gammatone filterbank
 
 # Training settings
 training:
+  path: saved_models
   batch_size: 32
   learning_rate: 0.0001
   epochs: 100
@@ -39,6 +48,7 @@ training:
   beta1: 0.9
   beta2: 0.999
   early_stopping_patience: 10
+  validation_split: 0.2 
 
 # Evaluation settings
 evaluation:
