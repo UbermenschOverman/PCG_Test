@@ -4,8 +4,12 @@
 data:
   normal_dir: "data/normal"
   abnormal_dir: "data/abnormal"
-  preprocessed_normal_dir: "preprocessed_data/normal"
-  preprocessed_abnormal_dir: "preprocessed_data/abnormal"
+  preprocessed_train_normal_dir: "preprocessed_data/train_normal"
+  preprocessed_train_abnormal_dir: "preprocessed_data/train_abnormal"
+  preprocessed_val_normal_dir: "preprocessed_data/val_normal"
+  preprocessed_val_abnormal_dir: "preprocessed_data/val_abnormal"
+  preprocessed_test_normal_dir: "preprocessed_data/test_normal"
+  preprocessed_test_abnormal_dir: "preprocessed_data/test_abnormal"
 
 # Model paths
 saved_models:
@@ -14,7 +18,7 @@ saved_models:
 
 #Model settings
 model:
-  input_shape: [128, 128, 1]
+  input_shape: [17, 1387, 1]
   shuffle: true
   embedding_dim: 128
   num_embeddings: 256
@@ -27,13 +31,11 @@ results:
 
 # Preprocessing settings
 preprocessing:
-  chunk_size: 4    # Length of each chunk in seconds
-  sample_rate: 2000  # Sample rate for audio
-  mel_n_fft: 512   # FFT size for Mel spectrogram
-  mel_win_length: 512  # Window size for Mel spectrogram
-  mel_hop_length: 128   # Hop length for Mel spectrogram
-  mel_num_mels: 512  # Number of Mel bins
-  gammatone: True    # Use Gammatone filterbank
+  sample_rate: 2000
+  target_rate: 1000
+  chunk_size: 12.5
+  stft_n_fft: 64
+  stft_hop_length: 3
 
 # Training settings
 training:

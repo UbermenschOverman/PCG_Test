@@ -1,6 +1,7 @@
 import os
 import matplotlib.pyplot as plt
 import numpy as np
+import yaml
 
 def plot_reconstruction(inputs, outputs, save_dir, prefix='sample', num_samples=5, cmap='gammatone'):
     """
@@ -27,6 +28,13 @@ def plot_reconstruction(inputs, outputs, save_dir, prefix='sample', num_samples=
         plt.savefig(save_path)
         plt.close()
         print(f"Saved: {save_path}")
+
+
+def model_config(config_path='config/config.yaml'):
+    with open(config_path) as f:
+        config = yaml.safe_load(f)
+    return config
+
 
 def calculate_mse(inputs, outputs):
     """

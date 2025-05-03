@@ -48,12 +48,12 @@ class VectorQuantizer(layers.Layer):
         return quantized
 
 def build_vqvae(input_shape, embedding_dim, num_embeddings, commitment_cost):
-    encoder_inputs = keras.Input(shape=input_shape)
+    encoder_inputs = keras.Input(shape=input_shape)  # e.g. (17, 1387, 1)
 
     # ====== Encoder ======
-    x = layers.Conv2D(32, 4, strides=2, padding='same', activation='relu')(encoder_inputs)
-    x = layers.Conv2D(64, 4, strides=2, padding='same', activation='relu')(x)
-    x = layers.Conv2D(embedding_dim, 1, strides=1, padding='same')(x)  # (batch, H/4, W/4, embedding_dim)
+    x = layers.Conv2D(32, kernel_size=4, strides=2, padding='same', activation='relu')(encoder_inputs)  # -> (ceil(17/2), ceil(1387/2))
+    x = layers.Conv2D(64, kernel_size=4, strides=2, padding='same', activation='relu')(x)               # -> (ceil(H/4), ceil(W/4))
+    x = layers.Conv2D(embedding_dim, kernel_size=1, strides=1, padding='same')(x)
 
     # ====== VQ Layer ======
     quantizer = VectorQuantizer(num_embeddings, embedding_dim, commitment_cost)
@@ -62,9 +62,13 @@ def build_vqvae(input_shape, embedding_dim, num_embeddings, commitment_cost):
     # ====== Decoder ======
     x = layers.Conv2DTranspose(64, 4, strides=2, padding='same', activation='relu')(quantized)
     x = layers.Conv2DTranspose(32, 4, strides=2, padding='same', activation='relu')(x)
-    decoder_outputs = layers.Conv2D(1, 1, activation='sigmoid')(x)
 
-    # ====== Model ======
+    # Resize về kích thước input ban đầu
+    x = layers.Resizing(17, 1387)(x)
+
+    decoder_outputs = layers.Conv2D(1, kernel_size=3, padding='same', activation='sigmoid')(x)
+
+
     vqvae = keras.Model(encoder_inputs, decoder_outputs, name='VQ-VAE')
 
     return vqvae

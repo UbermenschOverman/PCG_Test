@@ -33,8 +33,11 @@ def main():
     epochs = training_cfg['epochs']
 
     # Tạo dataset với img_size đã được truyền vào
-    image_size = (128, 128)  # Kích thước ảnh 
-    train_ds, val_ds = create_dataset(img_size=image_size, mode='train')
+    input_shape = tuple(model_cfg['input_shape'])  # [H, W, C] từ config.yaml
+    img_size = input_shape[:2]  # chỉ lấy (H, W)
+    train_ds, val_ds = create_dataset(img_size=img_size, mode='train')
+    train_ds = train_ds.map(lambda x, _: (x, x))
+    val_ds = val_ds.map(lambda x, _: (x, x))
 
     # Kiểm tra dữ liệu đầu vào
     for images, labels in train_ds.take(1):
@@ -45,7 +48,7 @@ def main():
 
     # Build model
     model = build_vqvae(
-        input_shape=model_cfg['input_shape'],
+        input_shape=input_shape,
         embedding_dim=model_cfg['embedding_dim'],
         num_embeddings=model_cfg['num_embeddings'],
         commitment_cost=training_cfg['commitment_cost']
