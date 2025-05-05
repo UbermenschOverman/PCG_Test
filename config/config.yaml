@@ -54,7 +54,7 @@ training:
 
 # Evaluation settings
 evaluation:
-  mse_threshold: 0.01  # Mean Squared Error threshold for evaluation
+  mse_threshold: 0.0005  # Mean Squared Error threshold for evaluation
   ssim_threshold: 0.75  # SSIM threshold for image quality evaluation
 
 # Inference settings

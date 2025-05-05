@@ -3,7 +3,7 @@ import tensorflow as tf
 import matplotlib.pyplot as plt
 import numpy as np
 from data_loader import create_dataset
-from model.vqvae import build_vqvae, VectorQuantizer  # Import your custom layer
+from model.vqvae import build_vqvae, VectorQuantizer  # Import custom layer
 import yaml
 from sklearn.metrics import f1_score, confusion_matrix, classification_report, roc_curve, roc_auc_score
 from datetime import datetime
@@ -69,10 +69,10 @@ def main():
     ground_truths = []
 
     for batch in test_ds:
-        # Chỉ cần truyền ảnh gốc vào model, không cần chỉ số phân loại
+        # Chỉ truyền ảnh gốc vào model, không cần chỉ số phân loại
         recon = model(batch[0], training=False)  # batch[0] là ảnh đầu vào
         reconstructions.append(recon)
-        ground_truths.append(batch[0])  # Dùng batch[0] làm ground truth
+        ground_truths.append(batch[0])  # batch[0] làm ground truth
 
     reconstructions = tf.concat(reconstructions, axis=0)
     ground_truths = tf.concat(ground_truths, axis=0)
@@ -89,7 +89,7 @@ def main():
     threshold = eval_cfg['mse_threshold']
     y_pred = (per_sample_mse > threshold).astype(int)
 
-    # Generate labels: assume test samples are ordered [normal..., abnormal...]
+    # Generate labels: test samples are ordered [normal..., abnormal...]
     num_samples = len(per_sample_mse)
     num_per_class = num_samples // 2
     y_true = np.array([0]*num_per_class + [1]*(num_samples - num_per_class))

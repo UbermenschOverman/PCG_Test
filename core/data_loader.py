@@ -17,13 +17,13 @@ def preprocess_data(data):
     data = tf.transpose(data, perm=[0, 2, 1, 3])  # chuyển từ (None, 1387, 17, 3) thành (None, 17, 1387, 3)
     data = tf.squeeze(data, axis=0)
 
-    # Giảm số kênh màu xuống còn 1 (ví dụ: chuyển đổi RGB thành grayscale)
+    # Giảm số kênh màu xuống còn 1 
     if data.shape[-1] == 3:
       data = tf.image.rgb_to_grayscale(data)
 
     return data
 
-# Hàm load và tiền xử lý ảnh, đồng thời sinh nhãn từ tên thư mục
+# Hàm load và tiền xử lý ảnh + sinh nhãn từ tên thư mục
 def load_and_preprocess_image_with_label(image_path, img_size):
     img = cv2.imread(image_path.numpy().decode())  # convert Tensor path -> string
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
