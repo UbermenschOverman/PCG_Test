@@ -51,6 +51,8 @@ Loss function:
 
 Model architecture is defined in: core/model/vqvae.py
 
+---
+
 ## Folder structure is shown below:
 PCG_Test/
 ├── config/
@@ -98,6 +100,8 @@ PCG_Test/
 1, python3 core/preprocess.py --config config/config.yaml   # Tien xu ly du lieu tu data => preprocessed_data
 2, python3 core/train.py --config config/config.yaml        # Train va luu mo hinh .h5 vao saved_models
 3, python3 core/test.py --config config/config.yaml         # Test model da train va luu test_log vao results/evals, Average MSE, F1-score, Confusion matrix, ROC curve
+
+---
 
 ## List of libraries/dependencies required: tensorflow, keras, pandas, numpy, matplotlib, gammatone, yacs, pydub, PyWavelets, opencv, sklearn, librosa.
 (Install with: pip install -r requirements.txt)
